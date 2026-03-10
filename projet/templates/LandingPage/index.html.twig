@@ -5,7 +5,15 @@
         <title>Bienvenue !</title>
     </head>
     <body>
+        <div id="header">
+            {% include 'Layouts/_header.html.twig' %}
+        </div>
+
         <h1> Bienvenue {{ name }} sur le site de vente en ligne ! </h1>
         <p> Vous êtes {{ role }} !</p>
+
+        <div id="footer">
+            {% include 'Layouts/_footer.html.twig' %}
+        </div>
     </body>
  </html>
