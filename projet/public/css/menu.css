@@ -1,0 +1,55 @@
+/* CSS pour le menu dans le header
+    à voir si on le déplace dans un auttre fichier */
+.menu {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    padding: 10px;
+}
+
+/* liens ================ */
+.menu-links {
+    display: flex;
+    list-style: none;
+    gap: 25px;
+    margin: 0;
+    padding: 0;
+}
+
+.menu-links a {
+    transition: margin-left 5s ease, font-size 5s ease, color 5s ease;
+    text-decoration: none;
+    color: black;
+    font-weight: 500;
+}
+
+.menu-links a:hover {
+    color:cyan;
+    font-size: 20px;
+    margin-left: 100px;
+}
+
+/* panier ================ */
+.cart {
+    position: relative;
+}
+
+.cart img {
+    width: 32px;
+}
+
+/* indicateur rouge du panier ================ */
+.cart-count {
+    position: absolute;
+    top: -5px;
+    right: -8px;
+
+    background: red;
+    color: white;
+
+    font-size: 12px;
+    font-weight: bold;
+
+    padding: 2px 6px;
+    border-radius: 4px;
+}

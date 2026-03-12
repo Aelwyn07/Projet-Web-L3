@@ -1,0 +1,32 @@
+{# Menu - header avec navigation et panier #}
+{% block css %}
+    <link rel="stylesheet" media="screen" type="text/css" title="default" href="{{ asset('css/menu.css') }}" />
+{% endblock %}
+
+<nav class="menu">
+
+    <ul class="menu-links">
+        <li><a href="/#">Accueil</a></li>
+
+        <li><a href="/#">Profil</a></li>
+
+        <li><a href="/#">Nos Produits</a></li>
+
+        {% if role|lower == "administrateur" %}
+            <li><a href="https://fr.wikipedia.org/wiki/Mass_Effect">Mass Effect</a></li>
+        {% endif %}
+    </ul>
+
+    <div class="cart">
+
+        <img src="{{ asset('images/cart.svg') }}" alt="panier">
+
+        {% set totalItems = 8 %}
+
+        {% if totalItems > 0 %}
+            <span class="cart-count">{{ totalItems }}</span>
+        {% endif %}
+
+    </div>
+
+</nav>
