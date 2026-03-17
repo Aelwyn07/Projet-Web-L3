@@ -6,20 +6,22 @@
 <nav class="menu">
 
     <ul class="menu-links">
-        <li><a href="/#">Accueil</a></li>
+        <li><a href="/">Accueil</a></li>
 
-        <li><a href="/#">Profil</a></li>
+        <li><a href="/profile#">Votre profil</a></li>
 
-        <li><a href="/#">Nos Produits</a></li>
+        <li><a href="/product">Nos Produits</a></li>
 
-        {% if role|lower == "administrateur" %}
+        {#{% if role|lower == "administrateur" %}#}
             <li><a href="https://fr.wikipedia.org/wiki/Mass_Effect">Mass Effect</a></li>
-        {% endif %}
+        {#{% endif %}#}
     </ul>
 
     <div class="cart">
 
-        <img src="{{ asset('images/cart.svg') }}" alt="panier">
+        <a href="/cart">
+            <img src="{{ asset('images/cart.svg') }}" alt="panier">
+        </a>
 
         {% set totalItems = 8 %}
 
