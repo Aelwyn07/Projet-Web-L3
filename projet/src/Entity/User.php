@@ -8,8 +8,8 @@ use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
-#[ORM\Table(name: '`user`')]
-#[ORM\UniqueConstraint(name: 'UNIQ_IDENTIFIER_ID_USER', fields: ['id_user'])]
+#[ORM\Table(name: '`proj_user`')]
+#[ORM\UniqueConstraint(name: 'UNIQ_IDENTIFIER_LOGIN', fields: ['login'])]
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
     #[ORM\Id]
@@ -18,7 +18,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private ?int $id = null;
 
     #[ORM\Column(length: 180)]
-    private ?string $id_user = null;
+    private ?string $login = null;
 
     /**
      * @var list<string> The user roles
@@ -32,19 +32,32 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column]
     private ?string $password = null;
 
+    #[ORM\Column(length: 100)]
+    private ?string $name = null;
+
+    #[ORM\Column(length: 100)]
+    private ?string $surname = null;
+
+    #[ORM\ManyToOne]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Country $id_country = null;
+
+    #[ORM\Column(type: 'date')]
+    private ?\DateTimeInterface $birth_date = null;
+
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getIdUser(): ?string
+    public function getLogin(): ?string
     {
-        return $this->id_user;
+        return $this->login;
     }
 
-    public function setIdUser(string $id_user): static
+    public function setLogin(string $login): static
     {
-        $this->id_user = $id_user;
+        $this->login = $login;
 
         return $this;
     }
@@ -56,7 +69,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     public function getUserIdentifier(): string
     {
-        return (string) $this->id_user;
+        return (string) $this->login;
     }
 
     /**
@@ -93,6 +106,52 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         $this->password = $password;
 
+        return $this;
+    }
+
+
+    public function getName(): ?string
+    {
+        return $this->name;
+    }
+
+    public function setName(string $name): static
+    {
+        $this->name = $name;
+        return $this;
+    }
+
+    public function getSurname(): ?string
+    {
+        return $this->surname;
+    }
+
+    public function setSurname(string $surname): static
+    {
+        $this->surname = $surname;
+        return $this;
+    }
+
+    public function getIdCountry(): ?Country
+    {
+        return $this->id_country;
+    }
+
+    public function setIdCountry(?Country $id_country): static
+    {
+        $this->id_country = $id_country;
+
+        return $this;
+    }
+
+    public function getBirthdate(): ?\DateTimeInterface
+    {
+        return $this->birth_date;
+    }
+
+    public function setBirthDate(\DateTimeInterface $birth_date): static
+    {
+        $this->birth_date = $birth_date;
         return $this;
     }
 
