@@ -11,8 +11,11 @@ final class LandingPageController extends AbstractController
     #[Route('/', name: 'landing_page')]
     public function index(): Response
     {
+        // ICI
+        $name = $this->getParameter('moi');
+
         $args = array(
-            'name' => 'Gillou',
+            'name' => $name,
             'role' => 'Administrateur',
         );
 
