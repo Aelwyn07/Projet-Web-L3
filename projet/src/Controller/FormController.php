@@ -19,7 +19,7 @@ final class FormController extends AbstractController
     public function userRegisterAction(EntityManagerInterface $em, Request $request): Response {
 
         $user = new User();
-        $user->setRoles(['MonRole']); // L'utilisateur ne choisit pas s'il est admin ou non..
+        $user->setRoles(['Utilisateur']); // L'utilisateur ne choisit pas s'il est admin ou non..
         
         // Lier l'entité au formulaire
         $form = $this->createForm(CreateAccountType::class, $user);
@@ -39,7 +39,7 @@ final class FormController extends AbstractController
             $em->persist($user);
             $em->flush();
             $this->addFlash('info', 'ajout utilisateur réussi');
-            return $this->redirectToRoute('/');
+            return $this->redirectToRoute('landing_page');
         }
 
         if ($form->isSubmitted()) {

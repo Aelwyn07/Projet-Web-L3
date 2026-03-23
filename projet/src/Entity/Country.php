@@ -17,6 +17,15 @@ class Country
     #[ORM\Column(length: 5)]
     private ?string $code = null;
 
+    #[ORM\Column(length: 150)]
+    private ?string $name = null;
+
+    public function __construct(string $code, string $name)
+    {
+        $this->code = $code;
+        $this->name = $name;
+    }
+
     public function getId(): ?int
     {
         return $this->id;
@@ -30,6 +39,18 @@ class Country
     public function setCode(string $code): static
     {
         $this->code = $code;
+
+        return $this;
+    }
+
+    public function getName(): ?string
+    {
+        return $this->name;
+    }
+
+    public function setName(string $name): static
+    {
+        $this->name = $name;
 
         return $this;
     }
