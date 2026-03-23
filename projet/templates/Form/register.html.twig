@@ -1,0 +1,18 @@
+{% extends 'Layouts/layout_vente.html.twig' %}
+
+{% block title %}{{ parent() }} : Inscription{% endblock %}
+
+{% block titre_principal %}
+    Création de compte
+{% endblock %}
+
+{% block vue %}
+    <h2>Créer un compte</h2>
+
+    {{ form_start(form) }}
+        {{ form_widget(form) }}
+    {{ form_end(form) }}
+
+    <h2>Debug (optionnel)</h2>
+    {{ dump(form) }}
+{% endblock %}

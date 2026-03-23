@@ -16,10 +16,11 @@ final class AuthController extends AbstractController
         return $this->render('AuthPage/login.html.twig');
     }
 
+    // Redirection vers le formulaire dans FormController
     #[Route('/register', name: 'register_page')]
     public function register(): Response
     {
-        return $this->render('AuthPage/register.html.twig');
+        return $this->redirect('user_register');
     }
 
     #[Route('/logout', name: 'logout_page')]
