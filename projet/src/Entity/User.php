@@ -40,7 +40,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[ORM\ManyToOne]
     #[ORM\JoinColumn(nullable: false)]
-    private ?Country $id_country = null;
+    private ?Country $country = null;
 
     #[ORM\Column(type: 'date')]
     private ?\DateTimeInterface $birth_date = null;
@@ -132,14 +132,14 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    public function getIdCountry(): ?Country
+    public function getCountry(): ?Country
     {
-        return $this->id_country;
+        return $this->country;
     }
 
-    public function setIdCountry(?Country $id_country): static
+    public function setCountry(?Country $country): static
     {
-        $this->id_country = $id_country;
+        $this->country = $country;
 
         return $this;
     }

@@ -16,11 +16,11 @@ class CountryProduct
 
     #[ORM\ManyToOne]
     #[ORM\JoinColumn(nullable: false)]
-    private ?Product $id_product = null;
+    private ?Product $product = null;
 
     #[ORM\ManyToOne]
     #[ORM\JoinColumn(nullable: false)]
-    private ?Country $id_country = null;
+    private ?Country $country = null;
 
     #[ORM\Column]
     private ?int $stock = null;
@@ -30,26 +30,26 @@ class CountryProduct
         return $this->id;
     }
 
-    public function getIdProduct(): ?Product
+    public function getProduct(): ?Product
     {
-        return $this->id_product;
+        return $this->product;
     }
 
-    public function setIdProduct(?Product $id_product): static
+    public function setProduct(?Product $product): static
     {
-        $this->id_product = $id_product;
+        $this->product = $product;
 
         return $this;
     }
 
-    public function getIdCountry(): ?Country
+    public function getCountry(): ?Country
     {
-        return $this->id_country;
+        return $this->country;
     }
 
-    public function setIdCountry(?Country $id_country): static
+    public function setCountry(?Country $country): static
     {
-        $this->id_country = $id_country;
+        $this->country = $country;
 
         return $this;
     }

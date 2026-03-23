@@ -6,7 +6,12 @@ use App\Repository\CartRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: CartRepository::class)]
-#[ORM\Table(name: '`proj_cart`')]
+#[ORM\Table(
+    name: '`proj_cart`',
+    uniqueConstraints: [
+        new ORM\UniqueConstraint(name: 'user_product_unique', columns: ['user_id', 'product_id'])
+    ]
+)]
 class Cart
 {
     #[ORM\Id]
@@ -14,13 +19,13 @@ class Cart
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\OneToOne(cascade: ['persist', 'remove'])]
+    #[ORM\ManyToOne]
     #[ORM\JoinColumn(nullable: false)]
-    private ?User $id_user = null;
+    private ?User $user = null;
 
     #[ORM\ManyToOne]
     #[ORM\JoinColumn(nullable: false)]
-    private ?Product $id_product = null;
+    private ?Product $product = null;
 
     #[ORM\Column]
     private ?int $quantity = null;
@@ -30,26 +35,26 @@ class Cart
         return $this->id;
     }
 
-    public function getIdUser(): ?User
+    public function getUser(): ?User
     {
-        return $this->id_user;
+        return $this->user;
     }
 
-    public function setIdUser(User $id_user): static
+    public function setUser(User $user): static
     {
-        $this->id_user = $id_user;
+        $this->user = $user;
 
         return $this;
     }
 
-    public function getIdProduct(): ?Product
+    public function getProduct(): ?Product
     {
-        return $this->id_product;
+        return $this->product;
     }
 
-    public function setIdProduct(?Product $id_product): static
+    public function setIdProduct(?Product $product): static
     {
-        $this->id_product = $id_product;
+        $this->product = $product;
 
         return $this;
     }
