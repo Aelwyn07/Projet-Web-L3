@@ -10,6 +10,7 @@ use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\Request;
 use App\Entity\User;
 use App\Form\CreateAccountType;
+use App\Form\EditAccountType;
 
 final class FormController extends AbstractController
 {
@@ -54,29 +55,56 @@ final class FormController extends AbstractController
         return $this->render('Form/register.html.twig', $args);
     }
 
-        
+    // Formulaire permettant à un utilisateur de modifier les informations de son profil
+    #[Route('/account/edit/{id}', name: 'user_edit')]
+    public function userEditAction(int $id, EntityManagerInterface $em, Request $request): Response {
 
-        
+        $user = $em->getRepository(User::class)->find($id);
+
+        if (!$user) {throw $this->createNotFoundException("L'utilisateur n'existe pas");}
+
+        $form = $this->createForm(EditAccountType::class, $user);
+        $form->add('Envoyer', SubmitType::class, ['label' => 'Modifier le compte']);
+        $form->handleRequest($request);
+
+        // A VOIR ICI
+        if ($form->isSubmitted() && $form->isValid()) {
+            $em->flush();
+            $this->addFlash('info', 'Vos modifications sont enregistrées');
+            return $this->redirectToRoute('landing_page');
+        }
+
+        $args = array(
+            'form' => $form,
+            //'myform' => $form->createView(),
+        );
+
+        return $this->render('Form/edit.html.twig', $args);
+    }
+}
 
 
+ /*   // Formulaire permettant à un utilisateur de se connecter
 
+     #[Route('/account/login', name: 'user_login')]
+    public function userLoginAction(EntityManagerInterface $em, Request $request): Response {
+        // (Récup via un cookie si login déjà mis)
+        // Propose un champ login/password+hash password
 
+        $form = $this->createForm(LoginType::class, $user);
+        $form->add('Envoyer', SubmitType::class, ['label' => 'Créer un compte']);
+        $form->handleRequest($request);
 
-
-
-
+        // Définitif : 
+        // return $this->render('Form/login.html.twig', $args);
+        return $this->render('Form/login.html.twig');
+    }
+}
 
 
     
-/*
-    // Formulaire permettant à un utilisateur de se connecter
-    #[Route('/account/login', name: 'form_film_create')]
-    public function userLoginAction(): Response {}
 
-    // Formulaire permettant à un utilisateur de modifier les informations de son profil
-    #[Route('/account/edit/{id}', name: 'form_film_edit')]
-    public function userEditAction(): Response {}
-
+    
     // Formulaire permettant à un administrateur de gérer les comptes utilisateurs
     #[Route('/admin/account/edit', name: 'form_profile_edit')]
     public function adminEditAction(): Response {}
@@ -88,4 +116,4 @@ final class FormController extends AbstractController
 */
 
 
-}
+

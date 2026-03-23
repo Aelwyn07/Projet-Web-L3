@@ -13,7 +13,7 @@ final class AuthController extends AbstractController
     #[Route('/login', name: 'login_page')]
     public function login(): Response
     {
-        return $this->render('AuthPage/login.html.twig');
+        return $this->redirect('user_login');
     }
 
     // Redirection vers le formulaire dans FormController
