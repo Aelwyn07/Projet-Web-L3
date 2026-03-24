@@ -26,7 +26,7 @@ class AddProductType extends AbstractType
                     'placeholder' => '------',
                     'multiple' => true,
                     'expanded' => true,       // checkbox
-                    'mapped' => false,        // association est dans le controller
+                    'mapped' => false,        // association déjà dans le controller
                 ])
         ;
     }

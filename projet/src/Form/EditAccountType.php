@@ -21,7 +21,7 @@ class EditAccountType extends AbstractType
             ->add('birth_date')
             ->add('country', EntityType::class, [
                 'class' => Country::class,
-                'choice_label' => 'id',
+                'choice_label' => 'name',
             ])
         ;
     }
