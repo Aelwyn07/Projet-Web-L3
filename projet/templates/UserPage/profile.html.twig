@@ -6,8 +6,26 @@
 
 {% include 'Layouts/_menu.html.twig' %}
 
-<h1>Page de profil utilisateur</h1>
+<h1>Profil Utilisateur</h1>
 
-<p>Cette page affichera les détails du compte utilisateur</p>
+{% if app.user %}
+    <p>Connecté en tant que : {{ app.user.login }}</p>
+
+    <ul>
+        <li>ID : {{ app.user.id }}</li>
+        <li>Nom : {{ app.user.name }}</li>
+        <li>Prénom : {{ app.user.surname }}</li>
+        <li>Date de naissance : {{ app.user.birthdate|date('d/m/Y') }}</li>
+    </ul>
+
+    <a href="{{ path('user_edit', {id: app.user.id}) }}">Modifier mes informations</a>
+    <br>
+    <a href="{{ path('user_logout') }}">Se déconnecter</a>
+
+{% else %}
+    <p>Vous n'êtes pas connecté</p>
+
+    <a href="{{ path('user_login') }}">Se connecter</a>
+{% endif %}
 
 {% endblock %}

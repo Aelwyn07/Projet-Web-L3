@@ -18,17 +18,9 @@
 
 .menu-links a {
     display: inline-block;
-    transition: transform 5s ease, color 5s ease;
-    text-decoration: none;
-    color: black;
     font-weight: 500;
 }
-/*
-.menu-links a:hover {
-    color:cyan;
-    transform: translateX(100px) translateY(-300px) rotate(720deg);
-}
-*/
+
 /* panier ================ */
 .cart {
     position: relative;

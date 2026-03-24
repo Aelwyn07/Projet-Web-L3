@@ -9,8 +9,13 @@
             {% include 'Layouts/_header.html.twig' %}
         </div>
 
-        <h1> Bienvenue {{ name }} sur le site de vente en ligne ! </h1>
-        <p> Vous êtes {{ role }} !</p>
+        {% if app.user %}
+            <h1>Bienvenue {{ app.user.surname }} sur le site de vente en ligne !</h1>
+            <p>Vous êtes {{ app.user.roles[0] }}</p>
+        {% else %}
+            <h1>Bienvenue sur le site de vente en ligne !</h1>
+            <p>Vous n'êtes pas connecté.</p>
+        {% endif %}
 
         <div id="footer">
             {% include 'Layouts/_footer.html.twig' %}
