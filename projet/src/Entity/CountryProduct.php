@@ -22,9 +22,6 @@ class CountryProduct
     #[ORM\JoinColumn(nullable: false)]
     private ?Country $country = null;
 
-    #[ORM\Column]
-    private ?int $stock = null;
-
     public function getId(): ?int
     {
         return $this->id;
@@ -50,18 +47,6 @@ class CountryProduct
     public function setCountry(?Country $country): static
     {
         $this->country = $country;
-
-        return $this;
-    }
-
-    public function getStock(): ?int
-    {
-        return $this->stock;
-    }
-
-    public function setStock(int $stock): static
-    {
-        $this->stock = $stock;
 
         return $this;
     }

@@ -11,6 +11,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use App\Entity\User;
 use App\Entity\Product;
+use App\Entity\CountryProduct;
 use App\Form\CreateAccountType;
 use App\Form\EditAccountType;
 use App\Form\AddProductType;
@@ -95,14 +96,25 @@ final class FormController extends AbstractController
         $form->add('Envoyer', SubmitType::class, ['label' => 'Ajouter le produit']);
         $form->handleRequest($request);
 
-        // penser a verifier le nom de l'article?
-
         // On soumet le formulaire et actualise les attributs de User
         if ($form->isSubmitted() && $form->isValid())
         {        
+            // On enregistre le produit dans product
             $em->persist($product);
+
+            // Créer les enregistrements dans la table intermédiaires avec les pays voulus
+            $countriesList = $form->get('countries')->getData();
+
+            foreach ($countriesList as $country) {
+                $cp = new CountryProduct();
+                $cp->setProduct($product);
+                $cp->setCountry($country);
+
+                $em->persist($cp);
+            }
+
             $em->flush();
-            $this->addFlash('info', 'ajout produit réussi');
+            $this->addFlash('info', 'ajout du produit réussi');
             return $this->redirectToRoute('landing_page');
         }
 
