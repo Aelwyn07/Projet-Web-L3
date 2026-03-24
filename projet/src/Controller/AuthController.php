@@ -26,6 +26,6 @@ final class AuthController extends AbstractController
     #[Route('/logout', name: 'logout_page')]
     public function logout(): Response
     {
-        return $this->render('AuthPage/logout.html.twig');
+        return $this->redirect('user_logout');
     }
 }
