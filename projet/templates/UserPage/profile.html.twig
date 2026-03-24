@@ -16,6 +16,7 @@
         <li>Nom : {{ app.user.name }}</li>
         <li>Prénom : {{ app.user.surname }}</li>
         <li>Date de naissance : {{ app.user.birthdate|date('d/m/Y') }}</li>
+        <li>Pays: {{ app.user.country.name }}</li>
     </ul>
 
     <a href="{{ path('user_edit', {id: app.user.id}) }}">Modifier mes informations</a>
