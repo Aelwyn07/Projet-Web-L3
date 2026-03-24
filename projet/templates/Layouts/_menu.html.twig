@@ -23,7 +23,7 @@
             <img src="{{ asset('images/cart.svg') }}" alt="panier">
         </a>
 
-        {% set totalItems = 8 %}
+        {% set totalItems = cart_count() %}
 
         {% if totalItems > 0 %}
             <span class="cart-count">{{ totalItems }}</span>

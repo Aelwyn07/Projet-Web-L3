@@ -5,9 +5,7 @@
         <title>Bienvenue !</title>
     </head>
     <body>
-        <div id="header">
-            {% include 'Layouts/_header.html.twig' %}
-        </div>
+        {% include 'Layouts/_header.html.twig' %}
 
         {% if app.user %}
             <h1>Bienvenue {{ app.user.surname }} sur le site de vente en ligne !</h1>
@@ -17,8 +15,6 @@
             <p>Vous n'êtes pas connecté.</p>
         {% endif %}
 
-        <div id="footer">
-            {% include 'Layouts/_footer.html.twig' %}
-        </div>
+        {% include 'Layouts/_footer.html.twig' %}
     </body>
  </html>
