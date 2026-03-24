@@ -10,6 +10,13 @@
             <div><strong>{{ product.label }}</strong></div>
             <div>{{ product.unitPrice }} €</div>
             <div>Stock: {{ product.stock }}</div>
+            <div>
+                <select name="quantity_{{ product.id }}">
+                    {% for i in 0..product.stock %}
+                        <option value="{{ i }}" {% if i == 0 %}selected{% endif %}>{{ i }}</option>
+                    {% endfor %}
+                </select>
+            </div>
         </div>
     {% endfor %}
 {% endblock %}
