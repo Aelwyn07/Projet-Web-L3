@@ -1,6 +1,18 @@
 {# bandeau supérieur fixe #}
+{% block css %}
+    <link rel="stylesheet" media="screen" type="text/css" title="default" href="{{ asset('css/header.css') }}" />
+{% endblock %}
 
 <header>
-    <h1>Super-Sudo marketing service</h1>
+    <div class="header-title">
+        <span>
+        Sabrunet Marketing Services |
+        {% if app.user %}
+            <span>{{ app.user.surname }} - {{ app.user.roles[0] }}</span>
+        {% else %}
+            <span>Anonyme</span>
+        {% endif %}
+        </span>
+    </div>
     {% include 'Layouts/_menu.html.twig' %}
 </header>

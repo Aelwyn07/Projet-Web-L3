@@ -1,20 +1,13 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        <meta charset="UTF-8">
-        <title>Bienvenue !</title>
-    </head>
-    <body>
-        {% include 'Layouts/_header.html.twig' %}
+{% extends 'base.html.twig' %}
 
-        {% if app.user %}
-            <h1>Bienvenue {{ app.user.surname }} sur le site de vente en ligne !</h1>
-            <p>Vous êtes {{ app.user.roles[0] }}</p>
-        {% else %}
-            <h1>Bienvenue sur le site de vente en ligne !</h1>
-            <p>Vous n'êtes pas connecté.</p>
-        {% endif %}
+{% block body %}
 
-        {% include 'Layouts/_footer.html.twig' %}
-    </body>
- </html>
+    {% if app.user %}
+        <h1>Bienvenue {{ app.user.surname }} sur le site de vente en ligne !</h1>
+        <p>Vous êtes {{ app.user.roles[0] }}</p>
+    {% else %}
+        <h1>Bienvenue sur le site de vente en ligne !</h1>
+        <p>Vous n'êtes pas connecté.</p>
+    {% endif %}
+
+{% endblock %}

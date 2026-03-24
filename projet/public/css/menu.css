@@ -2,9 +2,10 @@
     à voir si on le déplace dans un auttre fichier */
 .menu {
     display: flex;
-    justify-content: space-evenly;
+    justify-content: center;
     align-items: center;
     padding: 10px;
+    gap: 20px;
 }
 
 /* liens ================ */

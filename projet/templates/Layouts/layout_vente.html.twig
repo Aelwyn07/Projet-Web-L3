@@ -1,5 +1,5 @@
 {# template intermédiaire (niveau 2) #}
-{% extends 'Layouts/layout.html.twig' %}
+{% extends 'base.html.twig' %}
 
 {% block title %}Vente{% endblock %}
 
@@ -15,27 +15,11 @@
 {% endblock %}
 
 {% block body %}
-    <div id="flash">
-        {#{% include 'Layouts/_flash.html.twig' %}#}
-    </div>
-
-    <div id="menu">
-        {#{{ render(controller('App\\Controller\\AccueilController::menuAction')) }}#}
-    </div>
-
-    <div id="header">
-        {% include 'Layouts/_header.html.twig' %}
-    </div>
-
     <div id="titre">
         <h1>{% block titre_principal %}Notre site de vente{% endblock %}</h1>
     </div>
 
     <div id="vue">
         {% block vue %}{% endblock %}
-    </div>
-
-    <div id="footer">
-        {% include 'Layouts/_footer.html.twig' %}
     </div>
 {% endblock %}
