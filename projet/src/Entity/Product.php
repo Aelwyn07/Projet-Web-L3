@@ -30,7 +30,7 @@ class Product
         return $this->label;
     }
 
-    public function setLabel(string $label): static
+    public function setLabel(string $label)
     {
         $this->label = $label;
 
@@ -42,7 +42,7 @@ class Product
         return $this->unit_price;
     }
 
-    public function setUnitPrice(float $unit_price): static
+    public function setUnitPrice(float $unit_price)
     {
         $this->unit_price = $unit_price;
 

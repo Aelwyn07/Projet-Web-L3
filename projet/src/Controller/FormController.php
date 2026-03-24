@@ -10,8 +10,10 @@ use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use App\Entity\User;
+use App\Entity\Product;
 use App\Form\CreateAccountType;
 use App\Form\EditAccountType;
+use App\Form\AddProductType;
 
 final class FormController extends AbstractController
 {
@@ -82,16 +84,69 @@ final class FormController extends AbstractController
 
         return $this->render('Form/edit.html.twig', $args);
     }
+
+    // Formulaire permettant l'ajout d'un nouveau produit à la base
+    #[Route('/product/add', name: 'product_add')]
+    public function productAddAction(EntityManagerInterface $em, Request $request): Response {
+        $product = new Product();
+        
+        // Lier l'entité au formulaire
+        $form = $this->createForm(AddProductType::class, $product);
+        $form->add('Envoyer', SubmitType::class, ['label' => 'Ajouter le produit']);
+        $form->handleRequest($request);
+
+        // penser a verifier le nom de l'article?
+
+        // On soumet le formulaire et actualise les attributs de User
+        if ($form->isSubmitted() && $form->isValid())
+        {        
+            $em->persist($product);
+            $em->flush();
+            $this->addFlash('info', 'ajout produit réussi');
+            return $this->redirectToRoute('landing_page');
+        }
+
+        if ($form->isSubmitted()) {
+            $this->addFlash('info', 'ajout du produit incorrect');
+        }
+            
+        $args = array(
+            'form' => $form,
+            //'myform' => $form->createView(),
+        );
+
+        return $this->render('Form/add_product.html.twig', $args);
+    }
 }
 
-/*   
+
+ /*   // Formulaire permettant à un utilisateur de se connecter
+
+     #[Route('/account/login', name: 'user_login')]
+    public function userLoginAction(EntityManagerInterface $em, Request $request): Response {
+        // (Récup via un cookie si login déjà mis)
+        // Propose un champ login/password+hash password
+
+        $form = $this->createForm(LoginType::class, $user);
+        $form->add('Envoyer', SubmitType::class, ['label' => 'Créer un compte']);
+        $form->handleRequest($request);
+
+        // Définitif : 
+        // return $this->render('Form/login.html.twig', $args);
+        return $this->render('Form/login.html.twig');
+    }
+}
+
+
+    
+
+    
     // Formulaire permettant à un administrateur de gérer les comptes utilisateurs
     #[Route('/admin/account/edit', name: 'form_profile_edit')]
     public function adminEditAction(): Response {}
 
-    // Formulaire permettant l'ajout d'un nouveau produit à la base
-    #[Route('/contact', name: 'form_contact')]
-    public function add(): Response {}
+    
+
 */
 
 
