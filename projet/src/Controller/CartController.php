@@ -7,6 +7,12 @@ namespace App\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\HttpFoundation\Request;
+use Doctrine\ORM\EntityManagerInterface;
+use App\Entity\Cart;
+use App\Entity\User;
+use App\Entity\Product;
+use App\Form\ProductQuantityType;
 
 final class CartController extends AbstractController
 {
@@ -15,5 +21,56 @@ final class CartController extends AbstractController
     public function index(): Response
     {
         return $this->render('CartPage/cart.html.twig');
+    }
+
+    #[Route('/cart/add', name: 'cart_add', methods: ['POST'])]
+    public function addToCart(Request $request, EntityManagerInterface $em): Response
+    {
+        $user = $this->getUser();
+        if (!$user instanceof User) {
+            throw $this->createAccessDeniedException();
+        }
+
+        $form = $this->createForm(ProductQuantityType::class);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $data      = $form->getData();
+            $productId = (int) $data['product_id'];
+            $quantity  = (int) $data['quantity'];
+
+            $product = $em->getRepository(Product::class)->find($productId);
+            if (!$product) {
+                throw $this->createNotFoundException('Produit introuvable');
+            }
+
+            // Cherche si une ligne panier existe déjà pour cet utilisateur + produit
+            $cartRepo = $em->getRepository(Cart::class);
+            $cartLine = $cartRepo->findOneBy([
+                'user'    => $user,
+                'product' => $product,
+            ]);
+
+            if ($quantity === 0) {
+                // Rien à faire si on choisit 0
+            } elseif ($cartLine) {
+                // Met à jour la quantité existante
+                $cartLine->setQuantity($cartLine->getQuantity() + $quantity);
+            } else {
+                // Crée une nouvelle ligne panier
+                $cartLine = new Cart();
+                $cartLine->setUser($user);
+                $cartLine->setIdProduct($product);
+                $cartLine->setQuantity($quantity);
+                $em->persist($cartLine);
+            }
+
+            // Diminue le stock du produit
+            $product->setStock($product->getStock() - $quantity);
+
+            $em->flush();
+        }
+
+        return $this->redirectToRoute('product_list');
     }
 }

@@ -13,7 +13,6 @@
                 <th>Libellé</th>
                 <th>Prix (€)</th>
                 <th>Stock</th>
-                <th>Choix</th>
                 <th>Action</th>
             </tr>
         </thead>
@@ -25,16 +24,11 @@
                     <td>{{ product.stock }}</td>
                     <td>
                         {% if product.stock > 0 %}
-                            <select name="quantity_{{ product.id }}">
-                                {% for i in 0..product.stock %}
-                                    <option value="{{ i }}" {% if i == 0 %}selected{% endif %}>{{ i }}</option>
-                                {% endfor %}
-                            </select>
-                        {% endif %}
-                    </td>
-                    <td>
-                        {% if product.stock > 0 %}
-                            <input type="button" value="Commander" />
+                            {{ form_start(forms[product.id]) }}
+                            {{ form_widget(forms[product.id].product_id) }}
+                            {{ form_widget(forms[product.id].quantity) }}
+                            <button type="submit">Commander</button>
+                            {{ form_end(forms[product.id]) }}
                         {% endif %}
                     </td>
                 </tr>
