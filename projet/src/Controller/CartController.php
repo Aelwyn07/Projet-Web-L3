@@ -56,7 +56,8 @@ final class CartController extends AbstractController
             ]);
 
             if ($quantity === 0) {
-                // Rien à faire si on choisit 0
+                // Empeche d'ajouter une quantité vide à la table
+                return $this->redirectToRoute('product_list');
             } elseif ($cartLine) {
                 // Met à jour la quantité existante
                 $cartLine->setQuantity($cartLine->getQuantity() + $quantity);
