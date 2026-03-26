@@ -18,10 +18,6 @@
 
         <p>Fait-il beau en {{ app.user.country.name }} ?</p>
 
-        {% if is_granted('ROLE_ADMIN') and not is_granted('ROLE_SUPER_ADMIN') %}
-            <li><a href="{{ path('admin_users') }}">Gérer les utilisateurs</a></li>
-        {% endif %}
-
         {% if is_granted('ROLE_SUPER_ADMIN') %}
             <a href="{{ path('admin_add_admin') }}">Ajouter un administrateur</a>
         {% endif %}

@@ -8,9 +8,13 @@
     <ul class="menu-links">
         <li><a href="/">Accueil</a></li>
 
-        <li><a href="/profile#">Votre profil</a></li>
-
         {% if app.user %}
+            <li><a href="/profile#">Votre profil</a></li>
+
+            {% if is_granted('ROLE_ADMIN') and not is_granted('ROLE_SUPER_ADMIN') %}
+                <li><a href="{{ path('admin_users') }}">Gérer les utilisateurs</a></li>
+            {% endif %}
+
             {% if is_granted('ROLE_USER') or is_granted('ROLE_ADMIN') %}
                 <li><a href="/products">Nos Produits</a></li>
             {% endif %}
@@ -18,6 +22,10 @@
             {% if is_granted('ROLE_ADMIN') %}
                 <li><a href="https://fr.wikipedia.org/wiki/Mass_Effect">Mass Effect</a></li>
             {% endif %}
+            <a href="{{ path('user_logout') }}">Se déconnecter</a>
+        {% else %}
+            <li><a href="{{ path('user_login') }}">Se connecter</a></li>
+            <li><a href="{{ path('user_register') }}">Créer un compte</a></li>
         {% endif %}
     </ul>
 
@@ -38,3 +46,4 @@
     {% endif %}
 
 </nav>
+
