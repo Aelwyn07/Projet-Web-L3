@@ -15,6 +15,10 @@
                 <li><a href="{{ path('admin_users') }}">Gérer les utilisateurs</a></li>
             {% endif %}
 
+            {% if is_granted('ROLE_SUPER_ADMIN') %}
+                <a href="{{ path('admin_add_admin') }}">Ajouter un administrateur</a>
+            {% endif %}
+
             {% if is_granted('ROLE_USER') or is_granted('ROLE_ADMIN') %}
                 <li><a href="/products">Nos Produits</a></li>
             {% endif %}
