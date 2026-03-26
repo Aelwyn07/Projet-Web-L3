@@ -4,7 +4,28 @@
 
     {% if app.user %}
         <h1>Bienvenue {{ app.user.surname }} sur le site de vente en ligne !</h1>
-        <p>Vous êtes {{ app.user.roles[0] }}</p>
+        <p>Vous êtes 
+            {% if is_granted('ROLE_SUPER_ADMIN') %}
+               <span> un super-admin</span>
+            {% elseif is_granted('ROLE_ADMIN') %}
+                <span> un admin<span>
+            {% elseif is_granted('ROLE_USER') %}
+               <span> un client</span>
+            {% else %}
+                <span> au bon endroit!</span>
+            {% endif %}
+        </p>
+
+        <p>Fait-il beau en {{ app.user.country.name }} ?</p>
+
+        {% if is_granted('ROLE_ADMIN') and not is_granted('ROLE_SUPER_ADMIN') %}
+            <li><a href="{{ path('admin_users') }}">Gérer les utilisateurs</a></li>
+        {% endif %}
+
+        {% if is_granted('ROLE_SUPER_ADMIN') %}
+            <a href="{{ path('admin_add_admin') }}">Ajouter un administrateur</a>
+        {% endif %}
+
     {% else %}
         <h1>Bienvenue sur le site de vente en ligne !</h1>
         <p>Vous n'êtes pas connecté.</p>

@@ -8,7 +8,14 @@
         <span>
         Sabrunet Marketing Services |
         {% if app.user %}
-            <span>{{ app.user.surname }} - {{ app.user.roles[0] }}</span>
+            <span>{{ app.user.surname }} -
+            {% for role in app.user.roles %}
+                {{ role }}
+                {% if not loop.last %}
+                    , 
+                {% endif %}
+            {% endfor %}
+            </span>
         {% else %}
             <span>Anonyme</span>
         {% endif %}

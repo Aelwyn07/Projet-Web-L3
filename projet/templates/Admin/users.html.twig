@@ -1,0 +1,39 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Gestion des utilisateurs{% endblock %}
+
+{% block body %}
+
+    <h1>Gestion des Utilisateurs</h1>
+    <p>Suppression d'un utilisateur</p>
+
+    {% for user in users %}
+        <div>
+            <p><strong>Login :</strong> {{ user.login }}</p>
+            <p><strong>Mot de passe :</strong> {{ user.password }}</p>
+            <p><strong>Nom :</strong> {{ user.name }}</p>
+            <p><strong>Prénom :</strong> {{ user.surname }}</p>
+            <p><strong>Date :</strong> {{ user.birthdate|date('d/m/Y') }}</p>
+            <p><strong>Rôle(s) :</strong> 
+                {% for role in user.roles %}
+                    {{ role }}
+                    {% if not loop.last %}
+                        , 
+                    {% endif %}
+                {% endfor %}
+            </p>
+            <p><strong>Pays :</strong> {{ user.country.name }}</p>
+
+            {% if 'ROLE_SUPER_ADMIN' not in user.roles and user.id != app.user.id%}
+                <a href="{{ path('admin_user_delete', {id: user.id}) }}">
+                    Supprimer
+                </a>
+            {% elseif user.id == app.user.id %}
+                <strong>C'est vous</strong>
+            {% else %}
+                <p>Suppression impossible</p>
+            {% endif %}
+        </div>
+        <hr>
+    {% endfor %}
+{% endblock %}
