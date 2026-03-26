@@ -33,6 +33,13 @@ class AppExtension extends AbstractExtension
             return 0;
         }
 
-        return $this->cartRepository->count(['user' => $user]);
+        $cartLines = $this->cartRepository->findBy(['user' => $user]);
+
+        $total = 0;
+        foreach ($cartLines as $line) {
+            $total += $line->getQuantity();
+        }
+
+        return $total;
     }
 }
