@@ -1,25 +1,25 @@
 # Dépendances
-projet/vendor/
+site/vendor/
 
 # Cache et logs (générés automatiquement)
-projet/var/
+site/var/
 
 # Fichiers d'environnement (contiennent des secrets)
-projet/.env
-projet/.env.local
-projet/.env.*.local
+site/.env
+site/.env.local
+site/.env.*.local
 
 # Docker override local
-projet/compose.override.yaml
+site/compose.override.yaml
 
 # Fichiers Symfony générés
-projet/symfony.lock
+site/symfony.lock
 
 # IDE
-projet/.idea/
-projet/.vscode/
-projet/*.swp
+site/.idea/
+site/.vscode/
+site/*.swp
 
 # OS
-projet/.DS_Store
-projet/Thumbs.db
+site/.DS_Store
+site/Thumbs.db
