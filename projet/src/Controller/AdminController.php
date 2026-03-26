@@ -17,7 +17,7 @@ use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 final class AdminController extends AbstractController
 {
     #[Route('/admin/users', name: 'admin_users')]
-    public function usersDeleteAction(UserRepository $repo): Response
+    public function getUsers(UserRepository $repo): Response
     {
         $this->denyAccessUnlessGranted('ROLE_ADMIN');
 
@@ -33,7 +33,7 @@ final class AdminController extends AbstractController
     #[Route('/admin/user/delete/{id}', name: 'admin_user_delete')]
     public function deleteUser(User $user, EntityManagerInterface $em, CartRepository $cartRepo): Response {
 
-        if (in_array('ROLE_SUPER_ADMIN', $user->getRoles())) {
+        if ($this->isGranted('ROLE_SUPER_ADMIN')) {
             throw $this->createAccessDeniedException();
         }
 

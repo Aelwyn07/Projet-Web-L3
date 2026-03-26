@@ -66,6 +66,10 @@ final class FormController extends AbstractController
 
         $user = $em->getRepository(User::class)->find($id);
 
+        if ($user != $this->getUser()) { // si on modifie un compte qu'est pas le notre
+            throw $this->createAccessDeniedException();
+        }
+
         if (!$user) {throw $this->createNotFoundException("L'utilisateur n'existe pas");}
 
         $form = $this->createForm(EditAccountType::class, $user);
@@ -90,6 +94,9 @@ final class FormController extends AbstractController
     // Formulaire permettant l'ajout d'un nouveau produit à la base
     #[Route('/product/add', name: 'product_add')]
     public function productAddAction(EntityManagerInterface $em, Request $request): Response {
+
+        $this->denyAccessUnlessGranted('ROLE_ADMIN');
+
         $product = new Product();
         
         // Lier l'entité au formulaire
