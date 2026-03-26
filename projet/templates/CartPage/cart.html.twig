@@ -4,7 +4,42 @@
 
 {% block body %}
 
-    <h1>Votre Panier</h1>
-    <p>Cette page affichera le contenu du panier utilisateur</p>
+    <h2>Votre Panier</h2>
+    
+    {% if carts is empty %}
+        <p>Le panier est vide ! Achetez vite un article !</p>
+    {% else %}
+        <table border="1" cellpadding="5">
+            <thead>
+                <tr>
+                    <th>Libellé</th>
+                    <th>Prix unitaire</th>
+                    <th>Quantité</th>
+                    <th>Prix total</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for cart in carts %}
+                    <tr>
+                        <td>{{ cart.product.label }}</td>
+                        <td>{{ cart.product.unitPrice }} €</td>
+                        <td>{{ cart.quantity }}</td>
+                        <td>{{ cart.product.unitPrice * cart.quantity }} €</td>
+                        <td>
+                            
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+            <tr>
+                <td></td>
+                <td></td>
+                <td>Total :</td>
+                <td>{{ total }}</td>
+                <td> euros</td>
+            </tr>
+        </table>
 
+    {% endif %}
 {% endblock %}

@@ -13,10 +13,11 @@ use App\Entity\Cart;
 use App\Entity\User;
 use App\Entity\Product;
 use App\Form\ProductQuantityType;
+use App\Repository\CartRepository;
 
 final class CartController extends AbstractController
 {
-    #[Route('/cart', name: 'cart_page')]
+    #[Route('/temp', name: 'cart_page')]
 
     public function index(): Response
     {
@@ -31,7 +32,10 @@ final class CartController extends AbstractController
             throw $this->createAccessDeniedException();
         }
 
-        $form = $this->createForm(ProductQuantityType::class);
+        //$form = $this->createForm(ProductQuantityType::class);
+        $form = $this->createForm(ProductQuantityType::class, null,
+            ['quantity_choices' => array_combine(range(0, 9999), range(0, 9999)),]
+        );
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -72,5 +76,32 @@ final class CartController extends AbstractController
         }
 
         return $this->redirectToRoute('product_list');
+    }
+
+    #[Route('/cart', name: 'cart_list')]
+    public function listOfCart(CartRepository $repo): Response
+    {
+        $user = $this->getUser();
+
+        if (!$user instanceof User) {
+            throw $this->createAccessDeniedException();
+        }
+
+        // Selectionner le contenu du panier de l'utilisateur
+        $carts = $repo->findBy(['user' => $user]);
+        //$carts = $repo->findByUser($user);
+
+        // total : prix total a payer
+        $total = 0;
+        foreach($carts as $cart) {
+            $total += $cart->getProduct()->getUnitPrice() * $cart->getQuantity();
+        }
+
+        $args = array(
+            'carts' => $carts,
+            'total' => $total,
+        );
+
+        return $this->render('CartPage/cart.html.twig', $args);
     }
 }

@@ -29,6 +29,7 @@ final class ProductController extends AbstractController
     // Méthode pour afficher les produits sur le site de vente : 
     // -> L'utilisateur doit etre connecté pour identifier son pays
     // -> Une requête est faite pour ne proposer que les produits disponibles dans le pays de l'utilisateur
+    // On créé ici les formulaires pour chaque produit
 
     #[Route('/products', name: 'product_list')]
     public function listOfProduct(ProductRepository $repo, Request $request): Response
@@ -61,7 +62,7 @@ final class ProductController extends AbstractController
 
             $forms[$product->getId()] = $form->createView();
         }
-        
+
         $args = array(
             'products' => $products,
             'forms' => $forms,
