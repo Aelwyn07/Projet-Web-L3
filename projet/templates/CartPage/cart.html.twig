@@ -27,7 +27,7 @@
                         <td>{{ cart.quantity }}</td>
                         <td>{{ cart.product.unitPrice * cart.quantity }} €</td>
                         <td>
-                            
+                            <a href="{{ path('cart_remove', {id: cart.id}) }}">Supprimer</a>
                         </td>
                     </tr>
                 {% endfor %}
@@ -40,6 +40,8 @@
                 <td> euros</td>
             </tr>
         </table>
-
+        
+        <a href="{{ path('cart_clear') }}">Vider le panier</a>
+        <a href="{{ path('cart_command') }}">Commander</a>
     {% endif %}
 {% endblock %}

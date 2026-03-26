@@ -104,4 +104,55 @@ final class CartController extends AbstractController
 
         return $this->render('CartPage/cart.html.twig', $args);
     }
+
+    #[Route('/cart/remove/{id}', name: 'cart_remove')]
+    public function removeFromCart(EntityManagerInterface $em, int $id): Response
+    {
+        $cartLine = $em->getRepository(Cart::class)->find($id);
+
+        if (!$cartLine) {
+            throw $this->createNotFoundException('Ligne panier introuvable');
+        }
+
+        // On remet à jour le stock du produit
+        $product = $cartLine->getProduct();
+        $product->setStock($product->getStock() + $cartLine->getQuantity());
+
+        $em->remove($cartLine);
+        $em->flush();
+
+        return $this->redirectToRoute('cart_list');
+    }
+
+    #[Route('/cart/clear', name: 'cart_clear')]
+    public function clearCart(CartRepository $repo, EntityManagerInterface $em): Response
+    {
+        $user = $this->getUser();
+        $carts = $repo->findBy(['user' => $user]);
+
+        // On remet à jour les stocks des produits puis on l'enlève du panier
+        foreach ($carts as $cartLine) {
+            $cartLine->getProduct()->setStock(
+                $cartLine->getProduct()->getStock() + $cartLine->getQuantity()
+            );
+            $em->remove($cartLine);
+        }
+
+        $em->flush();
+        return $this->redirectToRoute('cart_list');
+    }
+
+    #[Route('/cart/command', name: 'cart_command')]
+    public function commandCart(CartRepository $repo, EntityManagerInterface $em): Response
+{
+    $user = $this->getUser();
+    $carts = $repo->findBy(['user' => $user]);
+
+    foreach ($carts as $cartLine) {
+        $em->remove($cartLine);
+    }
+
+    $em->flush();
+    return $this->redirectToRoute('cart_list');
+}
 }
