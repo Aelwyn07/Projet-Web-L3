@@ -131,36 +131,3 @@ final class FormController extends AbstractController
         return $this->render('Form/add_product.html.twig', $args);
     }
 }
-
-
- /*   // Formulaire permettant à un utilisateur de se connecter
-
-     #[Route('/account/login', name: 'user_login')]
-    public function userLoginAction(EntityManagerInterface $em, Request $request): Response {
-        // (Récup via un cookie si login déjà mis)
-        // Propose un champ login/password+hash password
-
-        $form = $this->createForm(LoginType::class, $user);
-        $form->add('Envoyer', SubmitType::class, ['label' => 'Créer un compte']);
-        $form->handleRequest($request);
-
-        // Définitif : 
-        // return $this->render('Form/login.html.twig', $args);
-        return $this->render('Form/login.html.twig');
-    }
-}
-
-
-    
-
-    
-    // Formulaire permettant à un administrateur de gérer les comptes utilisateurs
-    #[Route('/admin/account/edit', name: 'form_profile_edit')]
-    public function adminEditAction(): Response {}
-
-    
-
-*/
-
-
-
