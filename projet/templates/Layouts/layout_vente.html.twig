@@ -3,17 +3,6 @@
 
 {% block title %}Vente{% endblock %}
 
-{% block css %}
-    {{ parent() }}
-    <link rel="stylesheet" media="screen" type="text/css" title="default" href="{{ asset('css/default.css') }}" />
-{% endblock %}
-
-{% block javascript %}
-    {{ parent() }}
-    <script type="text/javascript" src="{{ asset('js/global.js') }}"></script>
-    <script type="text/javascript" src="{{ asset('js/macros.js') }}"></script>
-{% endblock %}
-
 {% block body %}
     <div id="titre">
         <h1>{% block titre_principal %}Notre site de vente{% endblock %}</h1>
