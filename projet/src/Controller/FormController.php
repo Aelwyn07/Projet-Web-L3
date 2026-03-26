@@ -24,7 +24,8 @@ final class FormController extends AbstractController
     public function userRegisterAction(EntityManagerInterface $em, UserPasswordHasherInterface $passwordHasher, Request $request): Response {
 
         $user = new User();
-        $user->setRoles(['Utilisateur']); // L'utilisateur ne choisit pas s'il est admin ou non..
+        // on a soit ROLE_USER, ROLE_ADMIN ou ROLE_SUPER_ADMIN
+        $user->setRoles(['ROLE_USER']); // L'utilisateur ne choisit pas s'il est admin ou non..
         
         // Lier l'entité au formulaire
         $form = $this->createForm(CreateAccountType::class, $user);

@@ -1,7 +1,10 @@
 /* CSS pour le footer / pied de page */
 footer {
-    width: 100vw;
-    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+    position: sticky;
     bottom: 0;
     background-color: #e5e5e5;
     padding: 10px 0;
